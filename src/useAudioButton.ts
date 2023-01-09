@@ -6,15 +6,15 @@
  */
 
 import { useAudioPlayer } from "./useAudioPlayer";
-import { TMediaFormat, TAUdioButtonOption, TPlayerState } from "./types";
+import { TMediaFormat, TAudioButtonOption, TPlayerState } from "./types";
 
 // デフォルト設定
-const DEFAULT: TAUdioButtonOption = {
+const DEFAULT: TAudioButtonOption = {
   // オーディオソースを指定する属性
   attrSource: "data-audio-src",
   // 状態を格納する属性
   attrState: "data-audio-state",
-  // ソースのタイプを指定する属性 {file / hds / hls / mse}
+  // ソースのタイプを指定する属性 {mp3 / hds / hls / mse}
   attrFormat: "data-audio-format",
   // useAudioSource の設定
   sourceOption: {
@@ -34,7 +34,7 @@ const DEFAULT: TAUdioButtonOption = {
 /**
  *
  */
-const useAudioButton = (option?: TAUdioButtonOption) => {
+const useAudioButton = (option?: TAudioButtonOption) => {
   // 設定反映
   const $_opt = Object.assign(DEFAULT, option);
   // オーディオプレイヤー

@@ -15,7 +15,7 @@ type TAudioSourceOption = {
   };
 };
 
-type TAUdioButtonOption = {
+type TAudioButtonOption = {
   attrSource?: string;
   attrState?: string;
   attrFormat?: string;
@@ -26,7 +26,7 @@ export type {
   TMediaFormat,
   TPlayerState,
   TAudioSourceOption,
-  TAUdioButtonOption,
+  TAudioButtonOption,
 };
 
 // type TModalOption = {
