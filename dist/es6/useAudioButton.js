@@ -12,7 +12,7 @@ var DEFAULT = {
   attrSource: "data-audio-src",
   // 状態を格納する属性
   attrState: "data-audio-state",
-  // ソースのタイプを指定する属性 {file / hds / hls / mse}
+  // ソースのタイプを指定する属性 {mp3 / hds / hls / mse}
   attrFormat: "data-audio-format",
   // useAudioSource の設定
   sourceOption: {

@@ -6,7 +6,7 @@
  * @author   Hiroshi Fukuda <info.sygnas@gmail.com>
  * @license  MIT
  */
-import { TMediaFormat, TAudioSourceOption } from "./types";
+import { TMediaFormat, TMediaSupport, TAudioSourceOption } from "./types";
 /**
  *
  * @param option
@@ -14,11 +14,11 @@ import { TMediaFormat, TAudioSourceOption } from "./types";
 declare const useAudioSource: (option?: TAudioSourceOption) => {
     audio: HTMLAudioElement;
     dashPlayer: any;
-    setAudioSource: (url: string, type?: TMediaFormat | undefined) => boolean;
-    readonly isSupportHds: boolean | undefined;
-    readonly isSupportHls: boolean | undefined;
-    readonly isSupportMse: boolean | undefined;
-    readonly isSupportStream: boolean | undefined;
+    setAudioSource: (url: string, format?: TMediaFormat | undefined) => boolean;
+    readonly isSupportHds: TMediaSupport;
+    readonly isSupportHls: TMediaSupport;
+    readonly isSupportMse: TMediaSupport;
+    readonly isSupportStream: boolean;
     readonly mediaFormat: TMediaFormat | undefined;
 };
 export { useAudioSource };

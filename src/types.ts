@@ -1,4 +1,5 @@
 type TMediaFormat = "mp3" | "hds" | "hls" | "mse";
+type TMediaSupport = "native" | "polyfill" | "none";
 
 type TPlayerState = "play" | "pause" | "stop";
 
@@ -24,29 +25,8 @@ type TAudioButtonOption = {
 
 export type {
   TMediaFormat,
+  TMediaSupport,
   TPlayerState,
   TAudioSourceOption,
   TAudioButtonOption,
 };
-
-// type TModalOption = {
-//   closeBtnText?: string;
-//   classModal?: string;
-//   classBg?: string;
-//   classSlide?: string;
-//   classContent?: string;
-//   classClose?: string;
-//   styleZIndex?: number;
-//   transitionBaseName?: string;
-// };
-
-// type TControlOption = {
-//   onOpen?: (id: string) => void;
-//   onClose?: (id: string) => void;
-// };
-
-// interface IRef<T> {
-//   value: T;
-// }
-
-// export type { TModalOption, TControlOption, IRef };

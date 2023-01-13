@@ -32,6 +32,8 @@ var useAudioSource = function useAudioSource(option) {
   var audio = new Audio();
   // dash.js のインスタンス
   var dashPlayer;
+  // hls.js のインスタンス
+  var hls;
   // 対応フォーマット
   var $_isSupportHds; // HDSを再生できるか
   var $_isSupportHls; // HLSを再生できるか
@@ -65,8 +67,20 @@ var useAudioSource = function useAudioSource(option) {
    * HLS形式でセットする
    */
   var $_setHlsSource = function $_setHlsSource(url) {
-    if (!$_isSupportHls) return false;
-    audio.src = "".concat(url).concat($_opt.hls.playlist);
+    if ($_isSupportHls === "none") return false;
+    console.log("support HLS");
+    var src = "".concat(url).concat($_opt.hls.playlist);
+    console.log("$_setHlsSource", src);
+    if ($_isSupportHls === "native") {
+      audio.src = src;
+    } else if ($_isSupportHls === "polyfill") {
+      if (hls === undefined) {
+        hls = new Hls();
+        hls.attachMedia(audio);
+      }
+      hls.loadSource(src);
+    }
+    console.log(audio.src);
     $_mediaFormat = "hls";
     return true;
   };
@@ -74,7 +88,7 @@ var useAudioSource = function useAudioSource(option) {
    * HDS形式でセットする
    */
   var $_setHdsSource = function $_setHdsSource(url) {
-    if (!$_isSupportHds) return false;
+    if ($_isSupportHds === "none") return false;
     audio.src = "".concat(url).concat($_opt.hds.playlist);
     $_mediaFormat = "hds";
     return true;
@@ -83,7 +97,7 @@ var useAudioSource = function useAudioSource(option) {
    * MSE形式でセットする
    */
   var $_setMseSource = function $_setMseSource(url) {
-    if (!$_isSupportMse) return false;
+    if ($_isSupportMse === "none") return false;
     // dash.js を使う
     $_mediaFormat = "mse";
     var src = "".concat(url).concat($_opt.mse.playlist);
@@ -100,25 +114,26 @@ var useAudioSource = function useAudioSource(option) {
    * @param {String} url
    * mp3/ogg など非ストリーミングの場合はファイルのURL。
    * ストリーミングの場合は {http://ホニャララ}/manifest.f4m をベースURLとして渡す
-   * @param {TMedia} type
-   * タイプを指定したい時は TYPE_HDS などを渡す。
-   * 非ストリーミングの場合は TYPE_FILE を必ず渡す。
+   * @param {TMediaFormat} format
+   * フォーマットを指定したい時は mp3 / hls / hds / mse のいずれかを渡す。
+   * 非ストリーミングの場合は mp3 を必ず渡す。
    */
   var setAudioSource = function setAudioSource(url) {
-    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
-    if (type === "mp3") {
+    var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+    console.log("setAudioSource", url, format);
+    if (format === "mp3") {
       return $_setMp3Source(url);
-    } else if (type === "hls") {
+    } else if (format === "hls") {
       return $_setHlsSource(url);
-    } else if (type === "hds") {
+    } else if (format === "hds") {
       return $_setHdsSource(url);
-    } else if (type === "mse") {
+    } else if (format === "mse") {
       return $_setMseSource(url);
-    } else if ($_isSupportHls) {
+    } else if ($_isSupportHls !== "none") {
       return $_setHlsSource(url);
-    } else if ($_isSupportHds) {
+    } else if ($_isSupportHds !== "none") {
       return $_setHdsSource(url);
-    } else if ($_isSupportMse) {
+    } else if ($_isSupportMse !== "none") {
       return $_setMseSource(url);
     }
     return false;

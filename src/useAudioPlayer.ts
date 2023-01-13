@@ -62,17 +62,16 @@ const useAudioPlayer = (option?: TAudioSourceOption) => {
    * 再生
    * @return boolean 再生に成功したら true
    */
-  const play = (url: string, format: TMediaFormat) => {
+  const play = (url: string, format: TMediaFormat | undefined = undefined) => {
     // すでに再生中なら止める
     if ($_isPlaying) {
       $_isPlaying = false;
       audioSource.audio.pause();
     }
 
-    // ・data-audio-type属性が file だったら非ストリーミング
-    // ・上記属性が null で、サポート環境チェックが問題なければ
-    //   ストリーミング種別自動判定
-    // ・hds / hls / mse を指定したストリーミング
+    // ・format が mp3 だったら非ストリーミング
+    // ・format が null で、サポート環境チェックが問題なければストリーミング種別自動判定
+    // ・hds / hls / mse を指定したらストリーミング
     // ・それ以外はエラー
     if (format === "mp3") {
       audioSource.setAudioSource(url, format);

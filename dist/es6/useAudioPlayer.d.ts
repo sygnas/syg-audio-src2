@@ -12,14 +12,14 @@ declare const useAudioPlayer: (option?: TAudioSourceOption) => {
     audioSource: {
         audio: HTMLAudioElement;
         dashPlayer: any;
-        setAudioSource: (url: string, type?: TMediaFormat | undefined) => boolean;
-        readonly isSupportHds: boolean | undefined;
-        readonly isSupportHls: boolean | undefined;
-        readonly isSupportMse: boolean | undefined;
-        readonly isSupportStream: boolean | undefined;
+        setAudioSource: (url: string, format?: TMediaFormat | undefined) => boolean;
+        readonly isSupportHds: import("./types").TMediaSupport;
+        readonly isSupportHls: import("./types").TMediaSupport;
+        readonly isSupportMse: import("./types").TMediaSupport;
+        readonly isSupportStream: boolean;
         readonly mediaFormat: TMediaFormat | undefined;
     };
-    play: (url: string, format: TMediaFormat) => boolean;
+    play: (url: string, format?: TMediaFormat | undefined) => boolean;
     stop: () => void;
     pause: () => void;
     readonly isPlaying: boolean;

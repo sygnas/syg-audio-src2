@@ -10,6 +10,8 @@ MP3 / OGG / HDS / HLS / MSE 形式に対応。
 
 ## Latest Release
 
+- 2023.01.12 : ver.1.2.0
+  - hls.js に対応
 - 2023.01.09 : ver.1.1.0
   - README.md 更新
 - 2022.12.14 : ver.1.0.0
@@ -98,6 +100,13 @@ HDS / HLS / MSE 形式はプレイリストが必要なため下記のように�
 プレイリスト `htts://example.com/foo.mp3/playlist.m3u8`
 ソース指定 `htts://example.com/foo.mp3`
 
+HLS 形式を使うには `hls.js` が必要。
+https://github.com/video-dev/hls.js
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+```
+
 ### MSE 形式について
 
 プレイリスト `htts://example.com/foo.mp3/manifest.mpd`
@@ -105,6 +114,10 @@ HDS / HLS / MSE 形式はプレイリストが必要なため下記のように�
 
 MSE 形式を使うには `dash.js` が必要。
 https://github.com/Dash-Industry-Forum/dash.js
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dashjs/2.6.4/dash.all.min.js"></script>
+```
 
 ---
 
