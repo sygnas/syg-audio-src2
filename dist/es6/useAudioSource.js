@@ -68,9 +68,9 @@ var useAudioSource = function useAudioSource(option) {
    */
   var $_setHlsSource = function $_setHlsSource(url) {
     if ($_isSupportHls === "none") return false;
-    console.log("support HLS");
+    // console.log("support HLS");
     var src = "".concat(url).concat($_opt.hls.playlist);
-    console.log("$_setHlsSource", src);
+    // console.log("$_setHlsSource", src);
     if ($_isSupportHls === "native") {
       audio.src = src;
     } else if ($_isSupportHls === "polyfill") {
@@ -80,7 +80,7 @@ var useAudioSource = function useAudioSource(option) {
       }
       hls.loadSource(src);
     }
-    console.log(audio.src);
+    // console.log(audio.src);
     $_mediaFormat = "hls";
     return true;
   };
@@ -120,7 +120,7 @@ var useAudioSource = function useAudioSource(option) {
    */
   var setAudioSource = function setAudioSource(url) {
     var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
-    console.log("setAudioSource", url, format);
+    // console.log("setAudioSource", url, format);
     if (format === "mp3") {
       return $_setMp3Source(url);
     } else if (format === "hls") {

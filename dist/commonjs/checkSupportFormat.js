@@ -25,13 +25,13 @@ var hds = function hds(audio) {
  */
 var hls = function hls(audio) {
   if (audio.canPlayType("application/vnd.apple.mpegURL") === "maybe") {
-    console.log("check HLS native");
+    // console.log("check HLS native");
     return "native";
   } else if (Hls.isSupported()) {
-    console.log("check HLS polyfill");
+    // console.log("check HLS polyfill");
     return "polyfill";
   }
-  console.log("check HLS none");
+  // console.log("check HLS none");
   return "none";
 };
 /** ************

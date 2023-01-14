@@ -83,10 +83,10 @@ const useAudioSource = (option?: TAudioSourceOption) => {
    */
   const $_setHlsSource = (url: string) => {
     if ($_isSupportHls === "none") return false;
-    console.log("support HLS");
+    // console.log("support HLS");
 
     const src = `${url}${$_opt.hls.playlist}`;
-    console.log("$_setHlsSource", src);
+    // console.log("$_setHlsSource", src);
 
     if ($_isSupportHls === "native") {
       audio.src = src;
@@ -97,7 +97,7 @@ const useAudioSource = (option?: TAudioSourceOption) => {
       }
       hls.loadSource(src);
     }
-    console.log(audio.src);
+    // console.log(audio.src);
     $_mediaFormat = "hls";
     return true;
   };
@@ -145,7 +145,7 @@ const useAudioSource = (option?: TAudioSourceOption) => {
     url: string,
     format: TMediaFormat | undefined = undefined
   ) => {
-    console.log("setAudioSource", url, format);
+    // console.log("setAudioSource", url, format);
     if (format === "mp3") {
       return $_setMp3Source(url);
     } else if (format === "hls") {
