@@ -104,6 +104,7 @@ HLS 形式を使うには `hls.js` が必要。
 https://github.com/video-dev/hls.js
 
 ```html
+<!-- 下記をhtmlに追記する -->
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 ```
 
@@ -116,6 +117,7 @@ MSE 形式を使うには `dash.js` が必要。
 https://github.com/Dash-Industry-Forum/dash.js
 
 ```html
+<!-- 下記をhtmlに追記する -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dashjs/2.6.4/dash.all.min.js"></script>
 ```
 

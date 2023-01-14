@@ -1,6 +1,6 @@
 {
   "name": "@sygnas/simple-audio-player2",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "main": "dist/commonjs/index.js",
   "module": "dist/es6/index.js",
   "exports": {
