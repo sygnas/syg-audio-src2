@@ -4,12 +4,23 @@
 
 ## Description
 
-1 つのボタンで再生・一時停止をやるだけの `useAudioButton`、簡単な制御を行う `useAudioPlayer`、対応フォーマットのチェックおよびソース管理の `useAudioSource` で構成されている。
+下記のモジュールにより構成されている。
+
+- `useAudioController`
+  - 再生ボタンとプログレスバーのコントローラー
+- `useAudioButton`
+  - ひとつのボタンで再生・一時停止をやるだけの
+- `useAudioPlayer`
+  - 簡単な制御を行う
+- `useAudioSource`
+  - 対応フォーマットのチェックおよびソース管理
 
 MP3 / OGG / HDS / HLS / MSE 形式に対応。
 
 ## Latest Release
 
+- 2023.01.26 : ver.2.0.0
+  - useAudioController を追加
 - 2023.01.12 : ver.1.2.0
   - hls.js に対応
 - 2023.01.09 : ver.1.1.0
@@ -83,6 +94,31 @@ const playVoice = () => {
 };
 ```
 
+## Usage：プログレスバーを表示させる
+
+### html
+
+```html
+<div id="app-player" data-audio-src="xxxx.mp3" data-audio-format="mp3">
+  <span class="playbtn"></span>
+
+  <span class="progress-base">
+    <span class="progress-bar"></span>
+  </span>
+</div>
+```
+
+### JavaScript
+
+```js
+import { useAudioController } from "@sygnas/simple-audio-player2";
+
+export default function () {
+  const audioController = useAudioController();
+  audioController.setControllerWithSelector("#app-player");
+}
+```
+
 ---
 
 ## 音声ファイルの指定について
@@ -123,11 +159,90 @@ https://github.com/Dash-Industry-Forum/dash.js
 
 ---
 
+## useAudioController
+
+`useAudioPlayer` を使って再生ボタンとプログレスバーを作る。
+
+見た目は何も定義していないので css を定義する必要がある。
+プログレスバーの伸縮は `.progress-bar` に `scaleX()` を指定しているだけ。
+
+```html
+<div id="app-player" data-audio-src="xxxx.mp3" data-audio-format="mp3">
+  <span class="playbtn"></span>
+
+  <span class="progress-base">
+    <span class="progress-bar"></span>
+  </span>
+</div>
+```
+
+### 属性
+
+| attribute        | comment                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------- |
+| data-audio-src   | 音声ファイルの URL を指定                                                                   |
+| data-audio-type  | 音声ファイルのフォーマットを指定。`mp3`、`hds`、`hls`、`mse`から指定。OGG 形式は`mp3`と記述 |
+| data-audio-state | 自動で追加される。状態が格納される。再生中 `play`、停止中 `stop`、一時停止中 `pause`        |
+
+### クラス名
+
+| className     | 役割                     |
+| ------------- | ------------------------ |
+| playbtn       | 再生ボタン               |
+| progress-base | プログレスバーの枠       |
+| progress-bar  | プログレスバーの伸縮部分 |
+
+### メソッド
+
+#### useAudioController(option?:TAudioControllerOption)
+
+useAudioController のインスタンスを作成。
+
+```js
+import { useAudioController } from "@sygnas/simple-audio-player2";
+const audioController = useAudioController();
+```
+
+##### オプション
+
+| param         | default            | comment                        |
+| ------------- | ------------------ | ------------------------------ |
+| btnClassName  | ".playbtn"         | プレイボタンのクラス名         |
+| baseClassName | ".progress-base"   | プログレスベースのクラス名     |
+| barClassName  | ".progress-bar"    | プログレスバーのクラス名       |
+| attrSource    | "data-audio-src"   | オーディオソースを指定する属性 |
+| attrState     | "data-audio-state" | 状態を格納する属性             |
+| attrFormat    | "data-audio-type"  | ソースのタイプを指定する属性   |
+| sourceOption  |                    | useAudioSource 参照            |
+
+#### setControllerWithSelector(selector:string)
+
+オーディオコントローラーのセレクターを指定。
+サンプルでは単体のコントローラーだが、複数同時にコントロールすることも可能。
+
+```js
+// `.js-controller` が複数あるなら全てがオーディオコントローラーとして動作する
+audioButton.setControllerWithSelector(".js-controller");
+```
+
+### プロパティ
+
+```js
+// 再生中のコントローラー番号が表示される
+console.log(audioButton.nowPlayingControllerIndex);
+```
+
+| property                  | comment                            |
+| ------------------------- | ---------------------------------- |
+| nowPlayingControllerIndex | 現在再生しているコントローラー番号 |
+
+---
+
 ## useAudioButton
 
 `useAudioPlayer` を使って簡易なオーディオ再生ボタンを作る。
 
-### Attributes
+### 属性
 
 | attribute        | comment                                                                                     |
 | ---------------- | ------------------------------------------------------------------------------------------- |
@@ -135,7 +250,7 @@ https://github.com/Dash-Industry-Forum/dash.js
 | data-audio-state | 状態が格納される。再生中 `play`、停止中 `stop`、一時停止中 `pause`                          |
 | data-audio-type  | 音声ファイルのフォーマットを指定。`mp3`、`hds`、`hls`、`mse`から指定。OGG 形式は`mp3`と記述 |
 
-### Method
+### メソッド
 
 #### useAudioButton(option?:TAudioButtonOption)
 
@@ -146,7 +261,7 @@ import { useAudioButton } from "@sygnas/simple-audio-player2";
 const audioButtom = useAudioButton();
 ```
 
-##### Option
+##### オプション
 
 | param        | default            | comment                        |
 | ------------ | ------------------ | ------------------------------ |
@@ -163,7 +278,7 @@ const audioButtom = useAudioButton();
 audioButton.setButtonWithSelector(".js-audioplayer");
 ```
 
-### Property
+### プロパティ
 
 ```js
 // 再生中のボタンが表示される
@@ -181,7 +296,7 @@ console.log(audioButton.nowPlayingButton);
 
 `useAudioSource` に音声データを渡して再生・停止の管理。
 
-### Method
+### メソッド
 
 #### useAudioPlayer(option?:TAudioSourceOption)
 
@@ -191,7 +306,7 @@ const audioPlayer = useAudioPlayer();
 audioPlayer.play("foo.mp3", "mp3");
 ```
 
-##### Option
+##### オプション
 
 `useAudioSource` のオプション。
 
@@ -208,7 +323,7 @@ audioPlayer.play("foo.mp3", "mp3");
 
 オーディオを一時停止する。
 
-### Property
+### プロパティ
 
 | property    | comment                         |
 | ----------- | ------------------------------- |
@@ -222,7 +337,7 @@ audioPlayer.play("foo.mp3", "mp3");
 MP3、HLS、HDS、MSE 方式のオーディオソースを管理。
 `useAudioPlayer` で使うものなので直接使うことは基本的にはない。
 
-### Method
+### メソッド
 
 #### useAudioSource(option?:TAudioSourceOption)
 
@@ -232,7 +347,7 @@ const audioSource = useAudioSource(option);
 audioSource.setAudioSource("foo.mp3", "mp3");
 ```
 
-##### Option
+##### オプション
 
 | param        | default          | comment                                      |
 | ------------ | ---------------- | -------------------------------------------- |
@@ -245,7 +360,7 @@ audioSource.setAudioSource("foo.mp3", "mp3");
 
 オーディオソースを渡して HTML5 Audio にセットする
 
-### Property
+### プロパティ
 
 | property        | comment                                       |
 | --------------- | --------------------------------------------- |

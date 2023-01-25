@@ -23,10 +23,21 @@ type TAudioButtonOption = {
   sourceOption?: TAudioSourceOption;
 };
 
+type TAudioControllerOption = {
+  attrSource?: string;
+  attrState?: string;
+  attrFormat?: string;
+  btnClassName?: string;
+  baseClassName?: string;
+  barClassName?: string;
+  sourceOption?: TAudioSourceOption;
+};
+
 export type {
   TMediaFormat,
   TMediaSupport,
   TPlayerState,
   TAudioSourceOption,
   TAudioButtonOption,
+  TAudioControllerOption,
 };
